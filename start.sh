@@ -5,12 +5,28 @@ if [[ ! -f /var/run/.stamp_installed ]]; then
     echo "The variable BIND9_ROOTDOMAIN must be set"
     exit 1
   fi
+  if [[ -z "${BIND9_KEYNAME}" ]];then
+    echo "The variable BIND9_KEYNAME must be set"
+    exit 1
+  fi
+  if [[ -z "${BIND9_KEY}" ]];then
+    echo "The variable BIND9_KEY must be set"
+    exit 1
+  fi
+  echo "Creating key configuration"
+  cat <<EOF > /etc/bind/tsig.key
+key "${BIND9_KEYNAME}" {
+  algorithm hmac-md5;
+  secret "${BIND9_KEY}";
+};
+EOF
   echo "Creating named configuration"
   cat <<EOF > /etc/bind/named.conf.local
+include "/etc/bind/tsig.key";
 zone "${BIND9_ROOTDOMAIN}" {
        type master;
        file "/etc/bind/zones/db.${BIND9_ROOTDOMAIN}";
-       allow-update { any; } ;
+       allow-update { key "${BIND9_KEYNAME}"; } ;
 };
 EOF
   echo "Creating ${BIND9_ROOTDOMAIN} configuration"
