@@ -1,8 +1,8 @@
 FROM debian:jessie
 
-ENV BIND9_ROOTDOMAIN example.com
-ENV BIND9_KEYNAME updatekey
-ENV BIND9_KEY thekey
+ENV BIND9_ROOTDOMAIN ''
+ENV BIND9_KEYNAME ''
+ENV BIND9_KEY ''
 
 RUN apt-get update -qq
 
