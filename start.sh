@@ -41,8 +41,31 @@ EOF
 			NS	ns.${BIND9_ROOTDOMAIN}.
 ns			A	127.0.0.1
 EOF
+  echo "Creating named.conf.options configuration"
+  if [[ -z "${BIND9_FORWARDERS}" ]];then
+    forwarders=""
+  else
+    fowarders="forwarders {$BIND9_FORWARDERS};"
+  fi
+
+  cat <<EOF > "/etc/bind/named.conf.options"
+options {
+	directory "/var/cache/bind";
+        allow-recursion {any;};
+        allow-query-cache {any;};
+        allow-query {any;};
+        recursion yes;
+	${fowarders}
+	dnssec-enable yes;
+	dnssec-validation yes;
+
+	auth-nxdomain no;    # conform to RFC1035
+	//listen-on-v6 { any; };
+};
+EOF
+
   chown -R bind:bind /etc/bind/zones/
   touch /var/run/.stamp_installed
 fi
 
-named -g -c /etc/bind/named.conf -u bind
+named -4 -g -c /etc/bind/named.conf -u bind
