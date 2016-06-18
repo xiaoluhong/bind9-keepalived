@@ -3,6 +3,7 @@ FROM debian:jessie
 ENV BIND9_ROOTDOMAIN ''
 ENV BIND9_KEYNAME ''
 ENV BIND9_KEY ''
+ENV BIND9_FORWARDERS ''
 
 RUN apt-get update -qq
 
