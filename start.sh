@@ -68,4 +68,9 @@ EOF
   touch /var/run/.stamp_installed
 fi
 
-named -4 -g -c /etc/bind/named.conf -u bind
+ipv4=""
+if [[ ! -z "${BIND9_IPV4ONLY}" ]];then
+  ipv4="-4"
+fi
+
+named $ipv4 -g -c /etc/bind/named.conf -u bind
