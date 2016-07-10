@@ -13,6 +13,16 @@ if [[ ! -f /var/run/.stamp_installed ]]; then
     echo "The variable BIND9_KEY must be set"
     exit 1
   fi
+  if [[ -z "${BIND9_IP}" ]];then
+    if [[ "${RANCHER_ENV}" == "true" ]]; then
+      BIND9_IP=`curl rancher-metadata/latest/self/host/agent_ip`
+      if [[ "$?" != "0" ]] || [[ "$BIND9_IP" == "" ]]; then
+        echo "Unable to get host ip" && exit 1
+      fi
+    else
+      echo "The variable BIND9_IP must be set" && exit 1
+    fi
+  fi
   echo "Creating key configuration"
   cat <<EOF > /etc/bind/tsig.key
 key "${BIND9_KEYNAME}" {
@@ -39,7 +49,7 @@ EOF
 				604800     ; minimum (1 week)
 				)
 			NS	ns.${BIND9_ROOTDOMAIN}.
-ns			A	127.0.0.1
+ns			A	${BIND9_IP}
 EOF
   echo "Creating named.conf.options configuration"
   if [[ -z "${BIND9_FORWARDERS}" ]];then
