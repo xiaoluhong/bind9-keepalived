@@ -2,11 +2,13 @@ docker-bind9
 ================
 This project build a bind9 domain name server configured to serve and accept updates for the root domain $BIND9_ROOTDOMAIN env variable.
 
-Use the following ENV when running :
+Use the following ENV when running:
+
 - "BIND9_IP" : public IP of the DNS
 - "BIND9_ROOTDOMAIN" : the root domain (like : example.com)
 - "BIND9_KEYNAME" : the name of the key
 - "BIND9_KEY" : the key base64 encoded
+- "BIND9_KEY_ALGORITHM" : the key algo - examples : hmac-md5, hmac-sha1, hmac-sha256, hmac-sha512
 - "BIND9_FORWARDERS" : the forwarders (like : 8.8.8.8;8.8.8.4;)
 - "BIND9_IPV4ONLY" : set bind9 to support only IPV4
 
