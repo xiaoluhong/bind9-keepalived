@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [[ ! -f /var/run/.stamp_installed ]]; then
+  BIND9_KEY_ALGORITHM=${BIND9_KEY_ALGORITHM-"hmac-sha512"} # other options are in manpage for named.conf - hmac-md5, hmac-sha1, hmac-sha512
   if [[ -z "${BIND9_ROOTDOMAIN}" ]];then
     echo "The variable BIND9_ROOTDOMAIN must be set"
     exit 1
@@ -26,7 +27,7 @@ if [[ ! -f /var/run/.stamp_installed ]]; then
   echo "Creating key configuration"
   cat <<EOF > /etc/bind/tsig.key
 key "${BIND9_KEYNAME}" {
-  algorithm hmac-md5;
+  algorithm "${BIND9_KEY_ALGORITHM}";
   secret "${BIND9_KEY}";
 };
 EOF
@@ -48,7 +49,7 @@ EOF
 				2419200    ; expire (4 weeks)
 				604800     ; minimum (1 week)
 				)
-			NS	ns.${BIND9_ROOTDOMAIN}.
+			NS	ns1.${BIND9_ROOTDOMAIN}.
 ns			A	${BIND9_IP}
 EOF
   echo "Creating named.conf.options configuration"
