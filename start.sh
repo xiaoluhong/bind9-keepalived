@@ -62,8 +62,8 @@ EOF
   cat <<EOF > "/etc/bind/named.conf.options"
 options {
 	directory "/var/cache/bind";
-        allow-recursion {any;};
-        allow-query-cache {any;};
+        allow-recursion {${BIND9_RECURSION_ACCEPT}};
+        allow-query-cache {${BIND9_QUERY_CACHE_ACCEPT}};
         allow-query {any;};
         recursion yes;
 	${fowarders}
@@ -74,9 +74,7 @@ options {
 	//listen-on-v6 { any; };
 };
 EOF
-
-  chown -R bind:bind /etc/bind/zones/
-  touch /var/run/.stamp_installed
+  touch /var/run/named/.stamp_installed
 fi
 
 ipv4=""

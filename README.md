@@ -11,9 +11,12 @@ Use the following ENV when running :
 - "BIND9_KEY_ALGORITHM" : the key algo - examples : hmac-md5, hmac-sha1, hmac-sha256, hmac-sha512
 - "BIND9_FORWARDERS" : the forwarders (like : 8.8.8.8;8.8.8.4;)
 - "BIND9_IPV4ONLY" : set bind9 to support only IPV4
+- "BIND9_QUERY_CACHE_ACCEPT": set IP to allow in allow-query-cache, default 127.0.0.1. (use 10.0.0.0/8 for any local ip)
+- "BIND9_RECURSION_ACCEPT": set IP to allow in allow-recursion, default 127.0.0.1. (use 10.0.0.0/8 for any local ip)
 
+The port 53 must be exposed in tcp and udp to answer DNS requests. The server will accept any query, but no cache request or recursion (the variable are set to listen 127.0.0.1 only by default)
 
-The port 53 must be exposed in tcp and udp to answer DNS requests. The server will accept any query, cache request, this is unsecure, be sure to know what you are doing.
+If you want to use AXFR requests for example, use a local ip range if possible like 10.0.0.0/8 in BIND9_QUERY_CACHE_ACCEPT and BIND9_RECURSION_ACCEPT variables.
 
 Run with :
 
