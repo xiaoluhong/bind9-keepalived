@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v2.1.1] - 2017-02-16
+### Fixed
+- Rights on /etc/bind/zones
+
 ## [v2.1.0] - 2017-02-16
 ### Added
 - added BIND9_QUERY_CACHE_ACCEPT and BIND9_RECURSION_ACCEPT environment variables

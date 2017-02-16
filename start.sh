@@ -49,7 +49,7 @@ EOF
 				2419200    ; expire (4 weeks)
 				604800     ; minimum (1 week)
 				)
-			NS	ns1.${BIND9_ROOTDOMAIN}.
+			NS	ns.${BIND9_ROOTDOMAIN}.
 ns			A	${BIND9_IP}
 EOF
   echo "Creating named.conf.options configuration"
@@ -74,6 +74,7 @@ options {
 	//listen-on-v6 { any; };
 };
 EOF
+  chown -R bind:bind /etc/bind/zones/
   touch /var/run/named/.stamp_installed
 fi
 

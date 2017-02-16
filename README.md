@@ -16,8 +16,6 @@ Use the following ENV when running :
 
 The port 53 must be exposed in tcp and udp to answer DNS requests. The server will accept any query, but no cache request or recursion (the variable are set to listen 127.0.0.1 only by default)
 
-If you want to use AXFR requests for example, use a local ip range if possible like 10.0.0.0/8 in BIND9_QUERY_CACHE_ACCEPT and BIND9_RECURSION_ACCEPT variables.
-
 Run with :
 
 ```bash
@@ -45,3 +43,18 @@ sudo docker run --name bind9 --restart=unless-stopped \
     -p 53:53 digitallumberjack/docker-bind9:latest
 
 ```
+
+To manually add an entry :
+```
+nsupdate -y secret:c2VjcmV0
+server 10.10.12.23
+update add myentry.example.com 60 A 10.10.14.100
+```
+
+To get all entries of a domain with axfr request:
+```
+dig -y secret:c2VjcmV0 @10.10.12.23 example.com axfr
+```
+
+
+See nsupdate man for usage.

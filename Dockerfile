@@ -18,10 +18,6 @@ RUN apt-get install locales bind9 curl -qq && apt-get clean
 
 COPY start.sh /usr/local/bin/
 
-RUN mkdir -p /var/run/named /etc/bind/zones && \
-  chmod 775 /var/run/named && \
-  chown -R root:bind /var/run/named /etc/bind/ 2>&1 && \
-  chmod 775 /usr/local/bin/start.sh 2>&1 && \
-  chown root:bind /usr/local/bin/start.sh 2>&1
+RUN mkdir -p /var/run/named /etc/bind/zones
 
 CMD ["/usr/local/bin/start.sh"]
