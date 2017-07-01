@@ -51,6 +51,7 @@ EOF
 				)
 			NS	ns.${BIND9_ROOTDOMAIN}.
 ns			A	${BIND9_IP}
+${BIND9_STATIC_ENTRIES}
 EOF
   echo "Creating named.conf.options configuration"
   if [[ -z "${BIND9_FORWARDERS}" ]];then
