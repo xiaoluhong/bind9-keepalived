@@ -13,6 +13,7 @@ Use the following ENV when running :
 - "BIND9_IPV4ONLY" : set bind9 to support only IPV4
 - "BIND9_QUERY_CACHE_ACCEPT": set IP to allow in allow-query-cache, default 127.0.0.1. (use 10.0.0.0/8 for any local ip)
 - "BIND9_RECURSION_ACCEPT": set IP to allow in allow-recursion, default 127.0.0.1. (use 10.0.0.0/8 for any local ip)
+- "BIND9_STATIC_ENTRIES": multiline static entries for your zone.
 
 The port 53 must be exposed in tcp and udp to answer DNS requests. The server will accept any query, but no cache request or recursion (the variable are set to listen 127.0.0.1 only by default)
 
@@ -39,6 +40,19 @@ sudo docker run --name bind9 --restart=unless-stopped \
     -e "BIND9_KEY_ALGORITHM=hmac-md5" \
     -e "BIND9_KEY=c2VjcmV0" \
     -e "BIND9_FORWARDERS=" \
+    -p 53:53/udp \
+    -p 53:53 digitallumberjack/docker-bind9:latest
+
+# With static entries
+sudo docker run --name bind9 --restart=unless-stopped \
+    -e "BIND9_IP=10.10.12.23" \
+    -e "BIND9_ROOTDOMAIN=example.com" \
+    -e "BIND9_KEYNAME=secret" \
+    -e "BIND9_KEY_ALGORITHM=hmac-md5" \
+    -e "BIND9_KEY=c2VjcmV0" \
+    -e "BIND9_FORWARDERS=" \
+    -e BIND9_STATIC_ENTRIES="www CNAME a.fqdn.com
+blog 60 A 10.10.10.10" \
     -p 53:53/udp \
     -p 53:53 digitallumberjack/docker-bind9:latest
 

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v2.2.0] - 2017-07-01
+### Added
+- support of BIND9_STATIC_ENTRIES 
+
 ## [v2.1.1] - 2017-02-16
 ### Fixed
 - Rights on /etc/bind/zones
