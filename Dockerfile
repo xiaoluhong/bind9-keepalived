@@ -28,5 +28,6 @@ RUN mkdir -p /data/keepalived
 #Install relatives
 RUN apt-get update && apt-get install keepalived -y
 ADD keepalived.conf /etc/keepalived
+ADD check.sh /etc/keepalived
 
 CMD ["/usr/local/bin/start.sh"]
