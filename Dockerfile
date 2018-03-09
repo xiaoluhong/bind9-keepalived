@@ -1,5 +1,6 @@
 FROM debian:jessie
 
+# bind9
 ENV BIND9_IP ''
 ENV BIND9_ROOTDOMAIN ''
 ENV BIND9_KEYNAME ''
@@ -20,5 +21,12 @@ RUN apt-get install locales bind9 curl -qq && apt-get clean
 COPY start.sh /usr/local/bin/
 
 RUN mkdir -p /var/run/named /etc/bind/zones
+
+# keepalived
+
+RUN mkdir -p /data/keepalived
+#Install relatives
+RUN apt-get update && apt-get install keepalived -y
+ADD keepalived.conf /etc/keepalived
 
 CMD ["/usr/local/bin/start.sh"]
