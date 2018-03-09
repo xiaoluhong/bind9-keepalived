@@ -85,3 +85,5 @@ if [[ ! -z "${BIND9_IPV4ONLY}" ]];then
 fi
 
 named $ipv4 -g -c /etc/bind/named.conf -u bind
+
+keepalived -D -l -n -f /etc/keepalived/keepalived.conf
